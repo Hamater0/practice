@@ -12,17 +12,25 @@ namespace С_Practice.Menu
             Console.WriteLine("=== Практикум по C# ===");
             Console.WriteLine("1. Уровень 1 — Базовый (задания 1–15)");
             Console.WriteLine("2. Уровень 2 — Средний (задания 16–35)");
-            Console.WriteLine("3. Уровень 3 — Продвинутый (задания 36–50)");
+            Console.WriteLine("3. Уровень 3 — Продвинутый (задания 36–50)"); 
             Console.WriteLine("4. Выход");
             Console.WriteLine();
             Console.Write("Выберите уровень:");
-            string userInpit = Console.ReadLine();
+            string? userInpit = Console.ReadLine();
 
             switch (userInpit)
             {
                 case "1":
                     LevelMenu levelMenu = new LevelMenu();
                     levelMenu.ShowLevelOneMenu();
+                    break;
+                case "2":
+                    LevelMenu levelMenu1 = new LevelMenu();
+                    levelMenu1.ShowLevelTwoMenu();
+                    break;
+                case "3":
+                        LevelMenu levelMenu2 = new LevelMenu();
+                    levelMenu2.ShowLevelThreeMenu();
                     break;
             }
         }
