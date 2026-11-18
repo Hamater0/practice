@@ -92,3 +92,59 @@ git push
 ### What I learned
 
 Ветка позволяет вести работу отдельно от `main`, а конфликт при merge возникает, когда одну и ту же строку изменили в двух ветках, и его разрешают вручную.
+
+## Task 35 — Branches & PR
+
+### Commands
+
+```bash
+git add .gitignore .editorconfig
+git commit -m "chore: add gitignore and editorconfig"
+git push
+
+git checkout -b feature/task-35
+# создал task35-demo.txt и сделал три коммита
+git commit -m "feat: task 35 - add demo file"
+git commit -m "fix: task 35 - fix demo file"
+git commit -m "docs: task 35 - update demo file"
+git push -u origin feature/task-35
+# Pull Request в main, squash-merge
+git checkout main
+git pull
+
+git checkout -b feature/rebase-demo
+git commit -m "wip: step 1"
+git commit -m "wip: step 2"
+git commit -m "wip: step 3"
+git rebase -i HEAD~3   # второй и третий коммит заменил на squash
+git commit --amend -m "feat: task 35 - rebase demo"
+git push --force-with-lease origin feature/rebase-demo
+```
+
+### PR link
+
+https://github.com/Hamater0/practice/pull/2
+
+### Rebase result
+
+До (`git log --oneline -4`):
+
+```
+e0572a3 wip: step 3
+b1beb45 wip: step 2
+006a3b6 wip: step 1
+7d50c12 feat: task 35 - git workflow demo (#2)
+```
+
+После (`git log --oneline -4`):
+
+```
+68c1f78 feat: task 35 - rebase demo
+7d50c12 feat: task 35 - git workflow demo (#2)
+4b596eb chore: add gitignore and editorconfig
+f3c6800 docs: update readme with task table
+```
+
+### What I learned
+
+Pull Request позволяет проверить изменения перед слиянием в `main`, а `rebase -i` с `squash` объединяет несколько мелких коммитов в один и делает историю чище.
