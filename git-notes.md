@@ -316,3 +316,48 @@ fac7097 docs: task 47 - add git notes
 ### What I learned
 
 `git reflog` хранит историю перемещений `HEAD`, поэтому даже после `reset --hard` потерянный коммит можно найти по хешу и вернуть.
+
+## Task 50 — bisect
+
+### Commands
+
+```bash
+git checkout -b feature/bisect-demo
+# сделал 10 коммитов "feat: step 1…10", в 6-м добавил строку BROKEN в bisect-demo.txt
+git bisect start
+git bisect bad
+git bisect good <hash коммита step 1>
+# на каждом шаге смотрел файл: есть BROKEN — git bisect bad, нет — git bisect good
+git bisect good
+git bisect bad
+git bisect bad
+git bisect log
+git bisect reset
+```
+
+### Output
+
+`git bisect log` (в конце видно найденный «плохой» коммит):
+
+```
+git bisect start
+# status: waiting for both 'good' and 'bad' commits
+# bad: [da5ca2c6a90611634c60178eb37af0289946e867] feat: step 10
+git bisect bad da5ca2c6a90611634c60178eb37af0289946e867
+# status: waiting for 'good' commit(s), 'bad' commit known
+# good: [65157ac4694dc079744bceaf91f38bbab1b42a95] feat: step 1
+git bisect good 65157ac4694dc079744bceaf91f38bbab1b42a95
+# good: [c8ddae438db7336118e383dc040ef10674df8128] feat: step 5
+git bisect good c8ddae438db7336118e383dc040ef10674df8128
+# bad: [29f786e50d1d64f2c18aed6aaaff29d4b8263231] feat: step 7
+git bisect bad 29f786e50d1d64f2c18aed6aaaff29d4b8263231
+# bad: [efd2d8717e51f4ef5757614bf120b23fdbd642bd] feat: step 6
+git bisect bad efd2d8717e51f4ef5757614bf120b23fdbd642bd
+# first 'bad' commit: [efd2d8717e51f4ef5757614bf120b23fdbd642bd] feat: step 6
+```
+
+Результат: Git нашёл первый «плохой» коммит `efd2d87` (`feat: step 6`), то есть именно тот, в котором я добавил строку `BROKEN`.
+
+### What I learned
+
+`git bisect` ищет «плохой» коммит бинарным поиском: на каждом шаге делит историю пополам, поэтому для 10 коммитов хватило трёх проверок.
