@@ -148,3 +148,35 @@ f3c6800 docs: update readme with task table
 ### What I learned
 
 Pull Request позволяет проверить изменения перед слиянием в `main`, а `rebase -i` с `squash` объединяет несколько мелких коммитов в один и делает историю чище.
+
+## Task 46 — git stash
+
+### Commands
+
+```bash
+# изменил отслеживаемый файл task35-demo.txt, не коммитил
+git stash
+git stash list
+git checkout -b feature/stash-demo
+git checkout main
+git stash pop
+git stash list
+```
+
+### Output
+
+`git stash list` до `git stash pop`:
+
+```
+stash@{0}: WIP on main: b0ee9f0 docs: task 35 - add git notes
+```
+
+`git stash list` после `git stash pop` (список пуст):
+
+```
+(пусто)
+```
+
+### What I learned
+
+`git stash` временно прячет незакоммиченные изменения, `git stash pop` возвращает их и удаляет запись из списка.
