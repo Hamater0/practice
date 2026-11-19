@@ -180,3 +180,46 @@ stash@{0}: WIP on main: b0ee9f0 docs: task 35 - add git notes
 ### What I learned
 
 `git stash` временно прячет незакоммиченные изменения, `git stash pop` возвращает их и удаляет запись из списка.
+
+## Task 47 — git rebase -i
+
+### Commands
+
+```bash
+git checkout -b feature/squash-demo
+git commit -m "wip: squash step 1"
+git commit -m "wip: squash step 2"
+git commit -m "wip: squash step 3"
+git commit -m "wip: squash step 4"
+git log --oneline
+git rebase -i HEAD~4   # у второго, третьего и четвёртого коммита pick заменил на squash
+git commit --amend -m "feat: task 47 - squash demo"
+git log --oneline
+git push -u origin feature/squash-demo
+```
+
+### Output
+
+`git log --oneline` до:
+
+```
+1d9c3bd wip: squash step 4
+089a011 wip: squash step 3
+6a721b4 wip: squash step 2
+ce04292 wip: squash step 1
+690893d Merge branch 'main' of https://github.com/Hamater0/practice
+```
+
+`git log --oneline` после:
+
+```
+87df133 feat: task 47 - squash demo
+690893d Merge branch 'main' of https://github.com/Hamater0/practice
+4020589 docs: task 46 - add git notes
+e0845a3  README.md
+b0ee9f0 docs: task 35 - add git notes
+```
+
+### What I learned
+
+В `rebase -i` у первого коммита остаётся `pick`, у остальных ставится `squash`, и четыре мелких коммита превращаются в один, история становится чище.
