@@ -223,3 +223,45 @@ b0ee9f0 docs: task 35 - add git notes
 ### What I learned
 
 В `rebase -i` у первого коммита остаётся `pick`, у остальных ставится `squash`, и четыре мелких коммита превращаются в один, история становится чище.
+
+## Task 48 — tags
+
+### Commands
+
+```bash
+git checkout main
+git tag -a v1.0.0 -m "Release v1.0.0"
+git push origin v1.0.0
+git tag
+git show v1.0.0
+```
+
+### Output
+
+`git tag`:
+
+```
+v1.0.0
+```
+
+`git show v1.0.0` (без изменений файлов):
+
+```
+tag v1.0.0
+Tagger: Hamater0 <gamovoff@yandex.ru>
+Date:   Thu Nov 19 12:32:42 2026 +0300
+
+Release v1.0.0
+
+commit fac70976d29d9b60f265ae2f78a4fc2493a60288
+Author: Hamater0 <gamovoff@yandex.ru>
+Date:   Thu Nov 19 12:32:24 2026 +0300
+
+    docs: task 47 - add git notes
+```
+
+Тег виден на GitHub: https://github.com/Hamater0/practice/tags
+
+### What I learned
+
+Аннотированный тег хранит автора, дату и сообщение, поэтому им удобно отмечать релизы. Его нужно отправлять отдельно командой `git push origin v1.0.0`.
