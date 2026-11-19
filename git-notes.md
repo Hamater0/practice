@@ -265,3 +265,54 @@ Date:   Thu Nov 19 12:32:24 2026 +0300
 ### What I learned
 
 Аннотированный тег хранит автора, дату и сообщение, поэтому им удобно отмечать релизы. Его нужно отправлять отдельно командой `git push origin v1.0.0`.
+
+## Task 49 — reflog
+
+### Commands
+
+```bash
+git checkout -b feature/reflog-demo
+git add reflog-demo.txt
+git commit -m "feat: add reflog demo"
+git reset --hard HEAD~1
+git reflog
+git reset --hard <hash>
+git reflog
+git log --oneline
+```
+
+### Output
+
+`git reflog` после `git reset --hard HEAD~1` (коммит пропал из `git log`, но виден в reflog):
+
+```
+ebaf613 HEAD@{0}: reset: moving to HEAD~1
+0759636 HEAD@{1}: commit: feat: add reflog demo
+ebaf613 HEAD@{2}: checkout: moving from main to feature/reflog-demo
+ebaf613 HEAD@{3}: checkout: moving from main to main
+ebaf613 HEAD@{4}: commit: docs: task 48 - add git notes
+fac7097 HEAD@{5}: commit: docs: task 47 - add git notes
+```
+
+`git reflog` после восстановления:
+
+```
+0759636 HEAD@{0}: reset: moving to 0759636
+ebaf613 HEAD@{1}: reset: moving to HEAD~1
+0759636 HEAD@{2}: commit: feat: add reflog demo
+ebaf613 HEAD@{3}: checkout: moving from main to feature/reflog-demo
+ebaf613 HEAD@{4}: checkout: moving from main to main
+ebaf613 HEAD@{5}: commit: docs: task 48 - add git notes
+```
+
+`git log --oneline` после восстановления:
+
+```
+0759636 feat: add reflog demo
+ebaf613 docs: task 48 - add git notes
+fac7097 docs: task 47 - add git notes
+```
+
+### What I learned
+
+`git reflog` хранит историю перемещений `HEAD`, поэтому даже после `reset --hard` потерянный коммит можно найти по хешу и вернуть.
