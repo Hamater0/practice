@@ -1,4 +1,4 @@
-﻿# Git notes
+# Git notes
 
 ## Task 15 — Basic git
 
